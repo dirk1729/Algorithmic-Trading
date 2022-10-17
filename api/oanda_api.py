@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 import json
-import constants.defs as defs
+from constants import *
 
 from dateutil import parser
 from datetime import datetime as dt
@@ -202,16 +202,3 @@ class OandaApi:
             return [ApiPrice(x, response['homeConversions']) for x in response['prices']]
 
         return None
-
-
-
-
-
-
-
-
-
-
-
-
-

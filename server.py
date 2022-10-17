@@ -1,6 +1,6 @@
 from email import message
 from flask import Flask, g, jsonify
-from flask_cors import CORS
+from Flask-Cors import CORS
 from api.oanda_api import OandaApi
 from scraping.bloomberg_com import bloomberg_com
 from scraping.investing_com import get_pair
@@ -10,6 +10,7 @@ import json
 
 app = Flask(__name__)
 CORS(app)
+
 
 def get_response(data):
     if data is None:
