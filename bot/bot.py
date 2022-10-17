@@ -1,14 +1,14 @@
 import json
 import time
-from bot.candle_manager import CandleManager
+from candle_manager import CandleManager
 from bot.technicals_manager import get_trade_decision
 from bot.trade_manager import place_trade
-
+import pandas
 from infrastructure.log_wrapper import LogWrapper
 from models.trade_settings import TradeSettings
 from api.oanda_api import OandaApi
-import constants.defs as defs
-
+import constants
+consts = constants.Constants()
 
 
 class Bot:
@@ -59,7 +59,7 @@ class Bot:
                 last_time = self.candle_manager.timings[p].last_time
                 trade_decision = get_trade_decision(last_time, p, Bot.GRANULARITY, self.api, 
                                                        self.trade_settings[p],  self.log_message)
-                if trade_decision is not None and trade_decision.signal != defs.NONE:
+                if trade_decision is not None and trade_decision.signal != constants.defs.NONE:
                     self.log_message(f"Place Trade: {trade_decision}", p)
                     self.log_to_main(f"Place Trade: {trade_decision}")
                     place_trade(trade_decision, self.api, self.log_message, self.log_to_error, self.trade_risk)
@@ -73,5 +73,3 @@ class Bot:
             except Exception as error:
                 self.log_to_error(f"CRASH: {error}")
                 break
-    
-
